@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Page</title>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <link rel="stylesheet" href="CSS/nav.css"/>
+    <style>
+        /* .card
+        {
+            display: flex;
+            width: 100%;
+            background-color: whitesmoke;
+            padding: 10px 20px;
+        } */
+        .card button
+        {
+            background-color: red;
+        }
+        .checkout
+        {
+            height: 200px;
+            margin-top: 50px;
+            padding: 10px;
+            background-color: teal;
+            width: 15%;
+        }
+        #cartAmount, .checkout > h2
+        {
+            color: white;
+            font-size: 30px;
+            text-align: center;
+        }
+        .checkout button
+        {
+            width: 100%;
+            height: 40px;
+            background-color: maroon;
+            color: white;
+            font-size: 20px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+   
+    <div id="nav">
+
+    </div>
+    <div class="outer">
+        <div id="container">
+    
+        </div>
+        <div class="checkout">
+            <h2>Total Amount</h2>
+            <h2 id="cartAmount"></h2>
+            <button onclick="redirectToCheckout()">Checkout</button>
+        </div>
+    </div>
+</body>
+</html>
+<script type="module">
+   
+   import navbar from "./JS/nav.js";
+   let navbar_container=document.getElementById("nav")
+   navbar_container.innerHTML= navbar();
+
+
+   var cart = JSON.parse(localStorage.getItem("CartMenu"));
+   console.log(cart)
+   var mainCont = document.getElementById("container");
+   showCartData(cart);
+   var totalAmount = 0;
+   function showCartData(cart)
+   {
+       totalAmount = 0;
+       mainCont.innerHTML="";
+    for(var i=0; i<cart.length; i++)
+   {
+        var card = document.createElement("div");
+        card.setAttribute("class", "card");
+
+        var imgDiv = document.createElement("div");
+        var img = document.createElement("img");
+        img.setAttribute("src", cart[i].imgURL);
+
+        imgDiv.append(img);
+
+        var desc = document.createElement("div");
+        var lb1 = document.createElement("h1")
+        lb1.textContent = cart[i].title;
+
+        var lb2 = document.createElement("h3");
+        lb2.innerHTML = "<span id='ctrg'>"+cart[i].category+"</span> | <span id='area'>"+cart[i].area+"</span>";
+
+        
+
+        var lb4 = document.createElement("p");
+        lb4.textContent = cart[i].description;
+
+        var lb3 = document.createElement("h3");
+        lb3.setAttribute("id", "price");
+        lb3.textContent = cart[i].price;
+        totalAmount += +cart[i].price;
+
+
+        var btn = document.createElement("button");
+        btn.textContent = "Remove";
+
+        btn.addEventListener("click", removeItem);
+
+        
+        
+        desc.append(lb1, lb2,  lb4, lb3, btn);
+        
+        card.append(imgDiv, desc)
+        mainCont.append(card);
+    
+   }
+
+   document.getElementById("cartAmount").textContent = totalAmount.toFixed(2);
+
+   
+   var cartCount = document.getElementById("cartCount");
+   cartCount.textContent = cart.length; 
+   
+
+   }
+
+
+   function removeItem(e)
+   {
+       console.log(e.target.parentNode);
+       var title = e.target.parentNode.querySelector("h1").textContent
+       var ctrg = e.target.parentNode.querySelector("#ctrg").textContent;
+       var area = e.target.parentNode.querySelector("#area").textContent;
+       var price = e.target.parentNode.querySelector("#price").textContent;
+       var img = e.target.parentNode.parentNode.querySelector("img").src;
+
+       var flag = false;
+
+for(var i=0; i<cart.length; i++)
+{
+    if(cart[i].title == title && cart[i].category == ctrg && cart[i].area == cart[i].area && cart[i].price == price)
+    {
+        cart.splice(i, 1);
+        localStorage.setItem("CartMenu", JSON.stringify(cart));
+        showCartData(cart);
+        alert("Item Removed from cart succesfully");
+        break;
+    }
+}
+console.log(cart);
+
+    //    console.log(title, ctrg, area, desciption, price);
+
+   }
+
+   var cartCount = document.getElementById("cartCount");
+   cartCount.textContent = cart.length; 
+
+
+  function redirectToCheckout()
+   {
+       window.location.href = "checkout.html";
+   }
+   
+</script>
