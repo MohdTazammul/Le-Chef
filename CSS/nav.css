@@ -1,0 +1,171 @@
+* {
+    font-family: 'Arima Madurai', sans-serif;
+  }
+  
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: inline-flex;
+    background: #ffffff;
+    color: #3d4152;
+    box-shadow: 1px 3px 4px #E6E6E6;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 1;
+  }
+  
+  .navigation {
+    display: flex;
+    align-items: center;
+    margin-left: 30%;
+    width: 50%;
+    /* border: 1px solid red; */
+  }
+  
+  .brand {
+    display:flex;
+    width: 10%;
+    gap: 10%;
+    margin: 25px 25px;
+    margin-left: 5%;
+    /* border: 1px solid red; */
+  } 
+  
+  .menu {
+    display: flex;
+    list-style:none;
+    gap: 3%;
+    width: 80%;  
+    justify-content: flex-end;  
+    /* margin-left: 5%; */
+    /* border: 1px solid red;  */
+  }
+  .menu-icons {
+    font-size: 22px !important;  
+    margin-bottom: -5px !important;
+    margin-right: -8px;
+  }
+  
+  .menu li a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 15px;
+  }
+  
+  .menu li a:hover {
+    text-decoration: underline;
+  }
+  
+  .search {
+    position: relative;
+    padding-bottom: 15px;
+    bottom: -7px;
+  }
+  
+  .search-input::placeholder {
+    color: #3d4152;
+    opacity: 0.8;    
+  }
+  
+  .search-input {
+    border:none;
+    position: absolute;
+    left: -440px;   
+    visibility: hidden;
+    opacity: 0;   
+    background: #ffffff;
+    color: #2d303d;
+    padding: 6px;
+    padding-left: 30px;
+    font-size: 12px;    
+    width: 400px;
+    transition: 80ms all ease-in;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .search-button {
+    background:transparent;
+    color: #3d4152;
+    cursor: pointer;
+    font-size: 16px;
+    padding-top: 4px;
+    border: none;
+    font-weight: bold;
+  }
+  .search-button span {
+    font-size: 16px !important;
+
+  }
+  
+  .search-button + .search-input, .search-input, .search .search-input {
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 9 !important;
+    box-shadow: 1px 3px 4px #bebcbc;
+    height: 25px !important;
+  }
+  
+
+  /* Menu Cart */
+
+     #container {
+       display: grid;
+       grid-template-columns: repeat(4,22%);
+       row-gap: 60px;
+       margin: auto;
+       margin-top: 10%;    
+       align-items: center;
+       justify-content: space-between;       
+       width: 95%;
+       /* border: 1px solid red; */
+     }
+     
+
+     .card
+        {
+        width:90%; 
+        height: 100%;
+        padding: 20px;
+        background-color: whitesmoke; 
+         /* border: 1px solid blue;  */
+        }
+        .card img
+        {
+            height: 100%;
+            width: 100%;            
+        }
+                
+        .card h3 ,p {
+          color: #867f90;
+        }
+        .card  div:nth-child(2){
+          /* border: 1px solid black; */
+          padding-left: 10px;
+          line-height: 1;
+          font-size: 12px;
+          height: 40%;
+          position: relative;
+        }
+       
+        .card button
+        {
+            background-color: #60b246;
+            color: white;
+            position: absolute;
+            bottom: 15px;
+            font-size: 20px;
+            padding: 5px 10px;
+            width: 93%;
+            border:none;
+        }
+        .card:hover{
+          border: 1px solid rgb(206, 202, 202);
+          border-radius: 10px;
+          background-color: rgb(241, 237, 237);
+          cursor: pointer;
+        }
