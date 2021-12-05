@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <link rel="stylesheet" href="CSS/nav.css"/>
+    <style>
+        #recipeCont {
+            width: 90%;
+            margin: auto;
+            margin-top: 100px;
+            /* padding: 20px; */
+            /* border: 1px solid red; */
+            border: 1px solid grey;
+            border-radius: 10px;
+            background-color: whitesmoke;
+            
+        }
+        #main_1,#main_2{            
+            padding: 20px;
+        }
+        #main_1 {
+            display: grid;      
+            grid-template-columns: 20% 80%;
+            gap: 40px;
+        }        
+
+        #main_1 img {
+            width: 100%;
+            height: 100%;
+        }
+        #main_1 #title{
+            font-size: 40px;
+            color: navy;
+        }
+        #main_1 #title2{
+            color: grey;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #iframe{
+            position: absolute;
+            right: 4%;
+            top: 10%;
+        }
+        #titleDiv{
+            position: relative;
+            box-sizing: content-box;
+        }
+        #main_2 #para{
+            line-height: 1.5;
+            text-align: justify;
+        }
+        #titleDiv button{
+            width: 40%;
+            height: 40px;
+            background-color: #60b246;
+            color: white;
+            border: none;
+            font-size: 20px;
+        }
+
+    </style>
+    
+</head>
+<body>
+    <div class="nav" id="nav">       
+    </div>
+    <div id="container">      
+    </div>
+    <div id="recipeCont">      
+
+    </div>
+
+
+</body>
+</html>
+<script type="module">
+    import navbar from "./JS/nav.js";
+    import getData from "./JS/getData.js";
+
+    let navbar_container=document.getElementById("nav")
+    navbar_container.innerHTML= navbar();
+
+
+
+
+
+    // Recipe-Individual-Page
+
+   let search_box=document.querySelector(".search-input");
+  console.log(search_box);
+
+  search_box.addEventListener("keypress",makeapicall);
+
+  var mainCont = document.getElementById("container");
+
+  var searchButton = document.querySelector(".search-button");
+  searchButton.addEventListener("click", makeapicall); 
+
+  async function makeapicall(e) {   
+    //   console.log(e.target.value) 
+    if(e.key==='Enter' || e.target.value == "button") {
+    //   console.log(e.target.value);    
+      let recipeName =  search_box.value;
+    //   console.log(recipeName);
+
+    // console.log( await getData(recipeName));
+
+    let recipeDetails = await getData(recipeName);
+
+    recipeDetails = recipeDetails.meals[0];
+
+    mainCont.style.display = "none";
+
+    let recipeCont = document.getElementById("recipeCont");
+
+    console.log(recipeDetails);
+
+    let amount = (Math.random() * (2000 + 500 +1) + 500).toFixed(2);
+
+    let url = recipeDetails.strYoutube;
+
+    url = url.replace("watch?v=", "embed/");
+
+    let style = ` <div id="main_1">
+            <div id="imagediv">
+                <img src="${recipeDetails.strMealThumb}" alt="">
+            </div>
+            <div id="titleDiv">
+                <h3 id="title">${recipeDetails.strMeal}</h3>
+                <h5 id="title2">
+                    ${recipeDetails.strCategory} &nbsp; | &nbsp; ${recipeDetails.strArea}
+                </h5>
+                
+                <p id="amount">${amount}</p>  
+                <button id="add_to_cart">Add To Cart</button> 
+                
+                <div id="iframe">
+                <iframe width="350px" height="200px" src="${url}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            </div>
+
+        </div>
+        <div id="main_2">            
+                <p id="para"><b>Recipe Instructions : </b> ${recipeDetails.strInstructions} </p>                        
+        </div> `;  
+    recipeCont.innerHTML = style; 
+    }    
+  }
+
+
+//   Home-Page
+    
+    
+   for(var i=0; i<20; i++)
+   {
+     showData();
+    async function showData()
+    {    
+
+        var data =  await getData();
+
+        // console.log(data);
+        var card = document.createElement("div");
+        card.setAttribute("class", "card");
+
+        
+
+        var imgDiv = document.createElement("div");
+        var img = document.createElement("img");
+        img.setAttribute("src", data.meals[0].strMealThumb);
+
+        imgDiv.append(img);
+
+        var desc = document.createElement("div");
+        var lb1 = document.createElement("h2")
+        lb1.textContent = data.meals[0].strMeal;
+
+        var lb2 = document.createElement("h3");
+        lb2.innerHTML = "<span id='ctrg'>"+data.meals[0].strCategory+"</span> | <span id='area'>"+data.meals[0].strArea+"</span>";
+
+        
+
+        var lb4 = document.createElement("p");
+        lb4.textContent = data.meals[0].strTags.substring(0,35);
+        var lb3 = document.createElement("h3");
+        lb3.setAttribute("id", "price");
+        lb3.textContent = (Math.random() * (2000 + 500 +1) + 500).toFixed(2);
+
+
+        var btn = document.createElement("button");
+        btn.textContent = "Add to Cart";
+
+        btn.addEventListener("click", addToCart);      
+        
+        desc.append(lb1, lb2,  lb4, lb3, btn);
+        
+        card.append(imgDiv, desc)
+        card.addEventListener("click", showrecipeDetails); 
+        mainCont.append(card);
+       
+    }
+   }
+
+   
+    // Details-from Home page          
+
+    async function showrecipeDetails(e){
+        console.log(e);
+
+    }
+
+   var cart = JSON.parse(localStorage.getItem("CartMenu")) || [];
+
+
+   function addToCart(e)
+   {
+       console.log(e.target.parentNode);
+       var title = e.target.parentNode.querySelector("h2").textContent
+       var ctrg = e.target.parentNode.querySelector("#ctrg").textContent;
+       var area = e.target.parentNode.querySelector("#area").textContent;
+       var desciption = e.target.parentNode.querySelector("p").textContent;
+       var price = e.target.parentNode.querySelector("#price").textContent;
+       var img = e.target.parentNode.parentNode.querySelector("img").src;
+    //    console.log(title, ctrg, area, desciption, price);
+
+
+    var obj = 
+    {
+        title : title,
+        category : ctrg,
+        area : area,
+        description : desciption,
+        price : price,
+        imgURL : img
+    }
+    var flag = false;
+
+    for(var i=0; i<cart.length; i++)
+    {
+        if(cart[i].title == title && cart[i].category == ctrg && cart[i].area == cart[i].area && cart[i].price == price)
+        {
+            flag = true;
+            break;
+        }
+    }
+    if(flag)
+       alert("This item is already in the cart");
+       else
+       {
+           cart.push(obj);
+           localStorage.setItem("CartMenu", JSON.stringify(cart));
+           var cartCount = document.getElementById("cartCount");
+           cartCount.textContent = cart.length; 
+           alert("Item pushed to cart succesfully");  
+       }
+
+   }
+
+   var cartCount = document.getElementById("cartCount");
+   cartCount.textContent = cart.length; 
+
+
+
+   
+</script>
