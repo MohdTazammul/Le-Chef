@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+   <link rel="stylesheet" href="css/nav.css" />
+   <style>
+       .cont
+       {
+           width: 25%;
+           background-color: teal;
+           color: white;
+           padding: 30px 50px;
+           margin: auto;
+           margin-top: 50px;
+           border-radius: 20px;
+           margin-bottom: 30px;
+       }
+       label
+       {
+          font-size: 24px;
+       }
+       input
+       {
+           width: 100%;
+           height: 40px;
+           margin-bottom: 20px;
+           font-size: 20px;
+           padding: 2px 10px;
+           box-sizing: border-box;
+       }
+       textarea
+       {
+           width: 100%;
+           height: 100px;
+           font-size: 20px;
+           padding: 2px 10px;
+           box-sizing: border-box;
+       }
+       button{
+           background-color: maroon;
+           color: white;
+           font-size: 25px;
+           border: none;
+           width: 100%;
+           height: 40px;
+           margin-top: 20px;
+       }
+       #msg
+       {
+           width: 90%;
+           background-color: #a2db76;
+           color: green;
+           font-size: 30px;
+           text-align: center;
+           /* padding: 10px ; */
+           margin:auto;
+           margin-top:30px;
+           border-radius: 10px;
+       }
+   </style>
+</head>
+<body>
+   <div class="nav">
+       <div>Login</div>
+       <div>Signup</div>
+       <div><a href="menu.html">Menu</a></div><div class="cart"><a href="cart.html"><span class="iconify" data-icon="akar-icons:cart" data-width="40" data-height="40"></span><span id="cartCount"></span></a></div>
+       
+   </div>
+   <div id="msg">
+
+   </div>
+   <div class="cont">
+
+    <label>Full Name</label><br>
+    <input type="text" id="name" >
+    <br>
+    <label>Email</label><br>
+    <input type="email" id="mail" >
+    <br>
+    <label>Contact Number</label><br>
+    <input type="number" id="number" >
+    <br>
+    <label>Full Addres</label><br>
+    <textarea  id="address" >
+        </textarea>
+
+    <br>
+    <button onclick="fillData()">Order</button>
+   </div>
+</body>
+</html>
+<script>
+
+    var orderInfo = JSON.parse(localStorage.getItem("OrderInfo")) || [];
+    console.log(orderInfo)
+    function fillData()
+    {
+        var name = document.getElementById("name").value;
+        var mail = document.getElementById("mail").value;
+        var number = document.getElementById("number").value;
+        var address = document.getElementById("address").value;
+        if(name != "" && mail != "" && number != "" && address != "")
+        {
+            var obj = {
+                name : name,
+                mail : mail,
+                number: number,
+                address : address
+            }
+            orderInfo.push(obj);
+            localStorage.setItem("OrderInfo", JSON.stringify(orderInfo));
+
+            var msg = document.getElementById("msg");
+
+            // alert("Your order is Accepted");
+            msg.innerHTML = "<span>Your order is Accepted</span>";
+
+            setTimeout(function(){
+                // alert("Your order is being cooked...");
+                msg.innerHTML = "<span>Your order is being cooked...</span>";
+            }, 3000)
+            setTimeout(function(){
+                // alert("Your order is ready...")
+                msg.innerHTML = "<span>Your order is ready...</span>";
+            }, 8000)
+            setTimeout(function(){
+                // alert("Out for delivery...")
+                msg.innerHTML = "<span>Out for delivery...</span>";
+            }, 10000)
+            setTimeout(function(){
+                // alert("Order Delivered...")
+                msg.innerHTML = "<span>Order Delivered &#10004;</span>";
+            }, 12000)
+        }
+        else{
+            alert("Please fill all details!!!");
+        }
+    }
+</script>
