@@ -1,7 +1,7 @@
 function navbar() {
     return ` <nav>
     <div class="brand" onclick="location.href='index.html'" >
-      <img src="Icons/leChef.png" alt="Le Chef Logo" width="200px" height="60px">  
+      <img src="Icons/leChef.png" alt="Le Chef Logo" width="200px" height="80px">  
     </div>
     <div class="navigation">
           <div class="search">
